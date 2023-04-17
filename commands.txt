@@ -1,0 +1,209 @@
+nmap -sS -sV -p 80,443 -oA nmap-output <TARGET-IP>
+nikto -h <TARGET-IP>
+gobuster -u http://<TARGET-IP>/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -e -k -t 50 -o gobuster-output.txt
+wpscan --url http://<TARGET-IP>/wordpress/ --enumerate u,t,p --threads 50 -o wpscan-output.txt
+droopescan scan -u http://<TARGET-IP>/ -t 50 -o droopescan-output.txt
+sqlmap -u "http://<TARGET-IP>/page.php?id=1" --threads 10 --level 2 --risk 2 -o sqlmap-output.txt
+dirb http://<TARGET-IP>/ -r -z 10 -o dirb-output.txt
+curl -I http://<TARGET-IP>
+hydra -l admin -P /usr/share/wordlists/rockyou.txt <TARGET-IP> http-get /admin -o hydra-output.txt
+wafw00f http://<TARGET-IP> -o wafw00f-output.txt
+whatweb http://<TARGET-IP>/ -o whatweb-output.txt
+sslscan <TARGET-IP>:443 -o sslscan-output.txt
+sslyze --regular <TARGET-IP>:443 -o sslyze-output.txt
+nikto -host <TARGET-IP> -ssl
+nmap -p 443 --script ssl-cert,ssl-enum-ciphers -oN ssl-scan <TARGET-IP>
+wpscan --url http://<TARGET-IP>/wordpress/ --enumerate p --wordlist /usr/share/wordlists/rockyou.txt -o wpscan-passwords.txt
+blindelephant.py -s http://<TARGET-IP> -o blindelephant-output
+wafninja -u http://<TARGET-IP>/ --os-shell -o wafninja-output.txt
+nmap -sU -sV -p 161,162 -oA snmp <TARGET-IP>
+onesixtyone -c community.txt <TARGET-IP>
+snmp-check <TARGET-IP> -c public -v1
+enum4linux -a <TARGET-IP>
+smbclient -N -L \\\\127.0.0.1\\ -I <TARGET-IP>
+rpcclient -U "" <TARGET-IP>
+nbtscan <TARGET-IP>
+nmap -p 445 --script=smb-vuln* <TARGET-IP>
+nmap -p 139 --script=smb-vuln* <TARGET-IP>
+nbtscan -r <TARGET-IP>/24 -oN nbtscan-output.txt
+enum4linux -a <TARGET-IP> | tee enum4linux-output.txt
+smbclient -N -L \\\\<TARGET-IP> | tee smbclient-output.txt
+rpcclient -U "" <TARGET-IP> -c enumprivs | tee rpcclient-output.txt
+nmap -sU --script=nfs-showmount <TARGET-IP>
+showmount -e <TARGET-IP>
+nmap -p 2049 --script=nfs* <TARGET-IP>
+nmap -p 111 --script=nfs*
+use auxiliary/scanner/http/dir_scanner
+use auxiliary/scanner/http/jboss_vulnscan
+use auxiliary/scanner/http/wordpress_enum_users
+use auxiliary/scanner/http/drupal_login
+use auxiliary/scanner/http/http_login
+use auxiliary/scanner/http/open_proxy
+use auxiliary/scanner/http/options
+use auxiliary/scanner/http/robots_txt
+use auxiliary/scanner/http/tomcat_mgr_login
+use auxiliary/scanner/http/webdav_scanner
+use auxiliary/scanner/ssh/ssh_enumusers
+use auxiliary/scanner/ftp/ftp_version
+use auxiliary/scanner/mssql/mssql_ping
+use auxiliary/scanner/mssql/mssql_login
+use auxiliary/scanner/mysql/mysql_version
+use auxiliary/scanner/mysql/mysql_login
+use auxiliary/scanner/oracle/oracle_login
+use auxiliary/scanner/postgres/postgres_login
+use auxiliary/scanner/smb/smb_version
+use auxiliary/scanner/smb/smb_login
+use auxiliary/scanner/snmp/snmp_enum
+use auxiliary/scanner/snmp/snmp_enumshares
+use auxiliary/scanner/snmp/snmp_enumusers
+use auxiliary/scanner/snmp/snmp_login
+use auxiliary/scanner/ssh/ssh_login_pubkey
+use auxiliary/scanner/ssh/ssh_login_keyscan
+use auxiliary/scanner/ssl/openssl_ccs
+use auxiliary/scanner/ssl/openssl_heartbleed
+use auxiliary/scanner/ssl/openssl_sweet32
+use auxiliary/scanner/ssl/openssl_drown
+use auxiliary/scanner/tcp/syn
+use auxiliary/scanner/tcp/null_scan
+use auxiliary/scanner/tcp/ack
+use auxiliary/scanner/tcp/fin_scan
+use auxiliary/scanner/tcp/xmas
+use auxiliary/scanner/upnp/ssdp
+use auxiliary/scanner/upnp/upnp_info
+use auxiliary/scanner/upnp/upnp_request
+use auxiliary/scanner/vnc/vnc_none_auth
+use auxiliary/scanner/vnc/vnc_auth_bypass
+use auxiliary/scanner/vnc/vnc_login
+use auxiliary/scanner/x11/open_x11
+use auxiliary/scanner/x11/x11_screen
+use auxiliary/scanner/x11/x11_screenshot
+use auxiliary/scanner/xmpp/xmpp_login
+use auxiliary/scanner/zyxel/zyxel_login
+use auxiliary/server/capture/smb
+use auxiliary/server/capture/ftp
+use auxiliary/server/capture/imap
+use auxiliary/server/capture/pop3
+searchsploit -x Wordpress 4.0 -- Brings up the exploit details for WordPress 4.0
+msfconsole - Start Metasploit Framework Console
+db_status - Check database status
+db_create - Create a database
+db_import - Import data from a file into a database
+workspace - List available workspaces
+workspace -a workspace_name - Create a new workspace
+workspace -s workspace_name - Set active workspace
+workspace -d workspace_name - Delete a workspace
+db_nmap - Run a Nmap scan and save results to the database
+hosts - List hosts in the database
+services - List services in the database
+vulns - List vulnerabilities in the database
+hosts -c address - Show information for a specific host
+services -c address - Show information for a specific service
+vulns -c vulnerability - Show information for a specific vulnerability
+db_autopwn - Automatically exploit hosts found in the database
+auxiliary/scanner/http/robots_txt - Check for robots.txt file on a website
+auxiliary/scanner/http/ssl - Check if a website uses SSL encryption
+auxiliary/scanner/http/tomcat_mgr_login - Test Tomcat Manager login credentials
+auxiliary/scanner/http/webdav_scanner - Find webdav directories
+auxiliary/scanner/http/wordpress_pingback_access - Test WordPress pingback access
+auxiliary/scanner/http/wordpress_users - Enumerate WordPress users
+auxiliary/scanner/ssh/ssh_login - Test SSH login credentials
+auxiliary/scanner/smb/smb_enumshares - Enumerate SMB shares
+auxiliary/scanner/smb/smb_lookupsid - Get SID for a target
+auxiliary/scanner/smb/smb_version - Get SMB version
+auxiliary/scanner/snmp/snmp_enum - Enumerate SNMP devices
+auxiliary/scanner/snmp/snmp_login - Test SNMP login credentials
+auxiliary/scanner/snmp/snmp_netstat - Enumerate open ports on an SNMP device
+auxiliary/scanner/mysql/mysql_version - Get MySQL version
+auxiliary/scanner/mysql/mysql_login - Test MySQL login credentials
+auxiliary/scanner/mssql/mssql_ping - Test connectivity to MSSQL server
+auxiliary/scanner/mssql/mssql_login - Test MSSQL login credentials
+auxiliary/scanner/mssql/mssql_escalate_execute_as - Try to escalate privilege
+auxiliary/scanner/ftp/ftp_version - Get FTP server version
+auxiliary/scanner/ftp/ftp_login - Test FTP login credentials
+auxiliary/scanner/http/apache_optionsbleed - Check for Optionsbleed vulnerability on Apache
+auxiliary/scanner/http/axis2_deployer - Check for Axis2 deployment service
+auxiliary/scanner/http/axis2_deployer_auth_bypass - Bypass authentication on Axis2 deployment service
+auxiliary/scanner/http/webdav_http_put - Test for HTTP PUT vulnerability in WebDAV
+auxiliary/scanner/http/sharepoint_valid_users - Enumerate SharePoint users
+auxiliary/scanner/http/sharepoint_login - Test SharePoint login credentials
+auxiliary/scanner/http/iis_shortname_scanner - Scan for 8.3 filename support in IIS
+auxiliary/scanner/http/tomcat_enum - Enumerate Tomcat information
+auxiliary/scanner/http/tomcat_mgr_deploy - Deploy WAR file to Tomcat Manager
+nmap -sS -sV -T4 <target>: Perform a port scan of the target system with service version detection
+nikto -h <target>: Scan the target web server for known vulnerabilities
+wpscan --url <target>: Scan a WordPress site for vulnerabilities
+dirb http://<target>/ <wordlist>: Brute force common directories and files on a web server
+sqlmap -u "<target>" --dbs: Automatic SQL injection and database takeover tool
+hydra -l <username> -P <passwordlist> -s <port> -f <target> <protocol>: Brute force login credentials using a password list
+theharvester -d <domain> -l <limit> -b <source>: Collect email addresses and other information from the target domain
+nbtscan <target>: NetBIOS name scanner to find Windows hosts on the network
+onesixtyone -c community -i <target>: SNMP scanner and brute force tool
+sslscan <target>: Scan SSL/TLS enabled services for supported ciphers and SSL versions
+enum4linux <target>: Enumerate Windows and Samba hosts and extract user and group information
+enumiax <target>: Enumerate IAX extensions and users on an Asterisk VoIP system
+smtp-user-enum -U <userlist> -t <target>: Enumerate user accounts on a SMTP server
+smtp-vrfy -M VRFY -f <sender> -t <target>: Verify the existence of user accounts on a SMTP server
+dnsenum --noreverse <target>: Enumerate DNS information on the target domain
+dnsrecon -t std -d <target>: Advanced DNS reconnaissance tool
+dnsmap <target>: Passive DNS mapping tool
+dnsenum --noreverse <target>: Enumerate DNS information on the target domain
+fierce -dns <target>: DNS reconnaissance tool
+dnsdict6 -t <target>: IPv6 DNS subdomain bruteforcing tool
+smtp-user-enum -U <userlist> -t <target>: Enumerate user accounts on a SMTP server
+smtp-vrfy -M VRFY -f <sender> -t <target>: Verify the existence of user accounts on a SMTP server
+smtp-user-enum -U <userlist> -t <target>: Enumerate user accounts on a SMTP server
+smtp-vrfy -M VRFY -f <sender> -t <target>: Verify the existence of user accounts on a SMTP server
+smtp-user-enum -U <userlist> -t <target>: Enumerate user accounts on a SMTP server
+smtp-vrfy -M VRFY -f <sender> -t <target>: Verify the existence of user accounts on a SMTP server
+smtp-user-enum -U <userlist> -t <target>: Enumerate user accounts on a SMTP server
+smtp-vrfy -M VRFY -f <sender> -t <target>: Verify the existence of user accounts on a SMTP server
+db_status
+db_nmap
+db_autopwn
+db_create
+db_import
+db_export
+db_destroy
+services
+services -p 22
+services -R
+hosts
+hosts -R
+hosts -c address
+hosts -c os_name
+vulns
+vulns -c severity
+vulns -c cvss_score
+creds
+creds -c username
+creds -c password
+loot
+loot -c type
+sessions
+sessions -c type
+sessions -u
+sessions -i
+shell
+shell -c whoami
+shell -c pwd
+shell -c ls
+shell -c cat /etc/passwd
+shell -c id
+shell -c ps
+shell -c kill 1234
+meterpreter
+meterpreter -c getuid
+meterpreter -c pwd
+meterpreter -c ls
+meterpreter -c cat /etc/passwd
+meterpreter -c getpid
+meterpreter -c kill 1234
+portfwd
+portfwd add -l 80 -p 8080 -r 192.168.1.100
+portfwd list
+portfwd delete 1
+portfwd flush
+search webapp
+search -c rank exploits
+search -c verified osvdb
+search -c verified cve
