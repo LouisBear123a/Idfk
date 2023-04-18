@@ -21,7 +21,7 @@ class WebScraper:
         data2 = soup.find_all('code')
 
         # Combine the data from both sources
-        data = process1.spider.data + [d.text for d in data2]
+        data = process1.crawler.spider.data + [d.text for d in data2]
         
         return data
 
