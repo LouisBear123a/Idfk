@@ -1,4 +1,5 @@
 import scrapy
+import requests
 from scrapy.crawler import CrawlerProcess
 from bs4 import BeautifulSoup
 
@@ -15,7 +16,7 @@ class WebScraper:
         process1.start()
 
         # Step 2: Scrape data from the second URL using BeautifulSoup
-        response2 = scrapy.Request(url=self.url2)
+        response2 = requests.get(self.url2)
         soup = BeautifulSoup(response2.text, 'html.parser')
         data2 = soup.find_all('code')
 
