@@ -1,23 +1,41 @@
-import requests
+import scrapy
+from scrapy.crawler import CrawlerProcess
 from bs4 import BeautifulSoup
 
+
 class WebScraper:
-    def __init__(self, url):
-        self.url = url
+    def __init__(self, url1, url2):
+        self.url1 = url1
+        self.url2 = url2
     
-    def get_data(self):
-        response = requests.get(self.url)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        data = []
-        for tag in soup.find_all('tag'):
-            data.append(tag.text)
+    def scrape_data(self):
+        # Step 1: Scrape data from the first URL using Scrapy
+        process1 = CrawlerProcess()
+        process1.crawl(WebScraperSpider, url=self.url1)
+        process1.start()
+
+        # Step 2: Scrape data from the second URL using BeautifulSoup
+        response2 = scrapy.Request(url=self.url2)
+        soup = BeautifulSoup(response2.text, 'html.parser')
+        data2 = soup.find_all('code')
+
+        # Combine the data from both sources
+        data = process1.spider.data + [d.text for d in data2]
+        
         return data
-    
-    def preprocess_data(self, data):
-        # Clean and preprocess the collected data
-        processed_data = []
-        for item in data:
-            # Remove irrelevant or redundant information
-            if 'irrelevant' not in item and 'redundant' not in item:
-                processed_data.append(item)
-        return processed_data
+
+
+class WebScraperSpider(scrapy.Spider):
+    name = 'WebScraperSpider'
+    data = []
+
+    def __init__(self, url, **kwargs):
+        super().__init__(**kwargs)
+        self.start_urls = [url]
+
+    def parse(self, response):
+        # Extract data from the web page
+        data = response.css('td.views-field-title a::text').getall()
+
+        # Store the data in the spider
+        self.data = data
