@@ -79,4 +79,35 @@ class ModelTrainer:
             total_correct += self.get_num_correct(outputs, targets)
         return total_loss / len(data_loader.dataset), total_correct / len(data_loader.dataset)
     
-    def evaluate_model(self
+    def evaluate_model(self):
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(self.model.parameters(), lr=self.lr)
+    
+    train_losses = []
+    val_losses = []
+    val_accs = []
+    for epoch in range(self.num_epochs):
+        train_loss = 0.0
+        self.model.train()
+        for inputs, targets in self.train_loader:
+            inputs = inputs.to(device)
+            targets = targets.to(device)
+            optimizer.zero_grad()
+            outputs = self.model(inputs)
+            loss = criterion(outputs, targets)
+            loss.backward()
+            optimizer.step()
+            train_loss += loss.item()
+        train_loss /= len(self.train_loader)
+        train_losses.append(train_loss)
+        
+        val_loss, val_acc = self.evaluate_on_validation_set()
+        val_losses.append(val_loss)
+        val_accs.append(val_acc)
+        
+        print(f'Epoch {epoch + 1}/{self.num_epochs}:')
+        print(f'Train Loss: {train_loss:.3f} | Val Loss: {val_loss:.3f} | Val Acc: {val_acc:.3f}')
+    
+    self.save_model()
+
