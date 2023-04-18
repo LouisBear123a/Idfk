@@ -7,7 +7,9 @@ from model_testing import ModelTester
 from deployment import CommandPredictor
 
 # Step 1: Collect data from relevant websites using WebScraper
-scraper = WebScraper()
+kali_url = 'https://tools.kali.org/tools-listing'
+msfconsole_url = 'https://www.hackingarticles.in/comprehensive-guide-to-metasploit-msfconsole/'
+scraper = WebScraper(kali_url, msfconsole_url)
 data = scraper.scrape_data()
 
 # Step 2: Preprocess the data using DataPreprocessing
