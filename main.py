@@ -50,3 +50,4 @@ print(f'Task for command "{command1}": {task1}')
 command2 = 'msfconsole'
 task2 = predictor.predict(command2)
 print(f'Task for command "{command2}": {task2}')
+
